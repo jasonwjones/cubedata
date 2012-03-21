@@ -1,0 +1,59 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>com.jasonwjones.hyperion</groupId>
+	<artifactId>cubedata</artifactId>
+	<version>1.0.0</version>
+	<name>Cube Data Generator</name>
+	<description>A simple utility for generating a text file with data that can be loaded to an OLAP cube (in particular, Oracle Hyperion Essbase cubes)</description>
+	<url>http://www.jasonwjones.com</url>
+	
+	<build>
+		<plugins>
+			<plugin>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<executions>
+					<execution>
+						<id>jar-with-dependencies</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptorRefs>
+								<descriptorRef>jar-with-dependencies</descriptorRef>
+							</descriptorRefs>
+							<archive>
+								<manifest>
+									<mainClass>com.jasonwjones.hyperion.cubedata.CubeData</mainClass>
+									<addClasspath>true</addClasspath>
+								</manifest>
+							</archive>
+
+							<!-- this creates a warning during the Maven package, which I don't 
+								love -->
+							<appendAssemblyId>false</appendAssemblyId>
+
+						</configuration>
+					</execution>
+					<!-- 
+					<execution>
+						<id>dist</id>
+						<phase>package</phase>
+						<goals>
+							<goal>single</goal>
+						</goals>
+						<configuration>
+							<descriptors>
+								<descriptor>src/main/assembly/dist.xml</descriptor>
+							</descriptors>
+						</configuration>
+					</execution>
+					-->
+				</executions>
+			</plugin>
+
+		</plugins>
+
+	</build>
+</project>

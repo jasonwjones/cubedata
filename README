@@ -1,0 +1,135 @@
+/*  Copyright 2012 Jason Jones
+ *
+ *  Licensed under the Apache License, Version 2.0 (the "License");
+ *  you may not use this file except in compliance with the License.
+ *  You may obtain a copy of the License at
+ *
+ *      http://www.apache.org/licenses/LICENSE-2.0
+ *
+ *  Unless required by applicable law or agreed to in writing, software
+ *  distributed under the License is distributed on an "AS IS" BASIS,
+ *  WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+ *  See the License for the specific language governing permissions and
+ *  limitations under the License.
+ */
+
+ 
+BACKGROUND & ABOUT
+================== 
+
+cubedata (Cube Data generator) is a small, simple, and free utility for 
+use in testing Essbase cubes. Although there is nothing specific to 
+Essbase in the files, it is primarily intended to be used with Essbase.
+
+cubedata generates a text file with all of the permutations of members that you
+specify. This is intended to test the performance characteristics of a BSO cube.
+It can also be used, of course, with an ASO cube. Using a simple configuration
+file, a data file can be generated with massive amounts of data suitable for
+testing in a cube. You'll need to create a simple load rule in order to load the
+data as presently the format that is output is not a "natural load" format that
+can be used without a load rule. For example, a simple configuration file with
+the following contents:
+
+	dimensions=Time,Scenario,Location,Departments
+	
+	members.Time=P01,P02
+	members.Scenario=Actual,Budget
+	members.Location=Lo.806,Lo.808,Lo.822
+	members.Departments=Dt.01,Dt.02,Dt.03,Dt.04
+
+Will generate all of the following data:
+
+	P01,Actual,Lo.806,Dt.01,911.85
+	P01,Actual,Lo.806,Dt.02,887.100
+	P01,Actual,Lo.806,Dt.03,251.49
+	P01,Actual,Lo.806,Dt.04,115.64
+	P01,Actual,Lo.808,Dt.01,197.60
+	P01,Actual,Lo.808,Dt.02,704.71
+	P01,Actual,Lo.808,Dt.03,512.76
+	P01,Actual,Lo.808,Dt.04,531.50
+	P01,Actual,Lo.822,Dt.01,982.92
+	P01,Actual,Lo.822,Dt.02,939.89
+	P01,Actual,Lo.822,Dt.03,228.89
+	P01,Actual,Lo.822,Dt.04,607.65
+	P01,Budget,Lo.806,Dt.01,765.63
+	P01,Budget,Lo.806,Dt.02,901.76
+	P01,Budget,Lo.806,Dt.03,214.02
+	P01,Budget,Lo.806,Dt.04,827.80
+	P01,Budget,Lo.808,Dt.01,898.76
+	P01,Budget,Lo.808,Dt.02,243.34
+	P01,Budget,Lo.808,Dt.03,542.69
+	P01,Budget,Lo.808,Dt.04,655.40
+	P01,Budget,Lo.822,Dt.01,689.74
+	P01,Budget,Lo.822,Dt.02,417.76
+	P01,Budget,Lo.822,Dt.03,967.11
+	P01,Budget,Lo.822,Dt.04,260.65
+	P02,Actual,Lo.806,Dt.01,265.39
+	P02,Actual,Lo.806,Dt.02,33.59
+	P02,Actual,Lo.806,Dt.03,412.62
+	P02,Actual,Lo.806,Dt.04,606.48
+	P02,Actual,Lo.808,Dt.01,192.98
+	P02,Actual,Lo.808,Dt.02,829.82
+	P02,Actual,Lo.808,Dt.03,931.96
+	P02,Actual,Lo.808,Dt.04,800.80
+	P02,Actual,Lo.822,Dt.01,706.85
+	P02,Actual,Lo.822,Dt.02,969.74
+	P02,Actual,Lo.822,Dt.03,96.66
+	P02,Actual,Lo.822,Dt.04,543.98
+	P02,Budget,Lo.806,Dt.01,965.96
+	P02,Budget,Lo.806,Dt.02,464.94
+	P02,Budget,Lo.806,Dt.03,620.88
+	P02,Budget,Lo.806,Dt.04,883.96
+	P02,Budget,Lo.808,Dt.01,26.41
+	P02,Budget,Lo.808,Dt.02,473.03
+	P02,Budget,Lo.808,Dt.03,1.92
+	P02,Budget,Lo.808,Dt.04,337.79
+	P02,Budget,Lo.822,Dt.01,270.68
+	P02,Budget,Lo.822,Dt.02,217.62
+	P02,Budget,Lo.822,Dt.03,245.25
+	P02,Budget,Lo.822,Dt.04,789.81
+
+This may be more convenient than generating data by hand or using Excel to lock
+and send. cubedata comes with a runnable Java JAR file that can be used as is, 
+assuming that a recent JRE is installed (currently just tested with 1.6). It 
+looks for a file called data.properties that contains the specification. A 
+different file can be specified on the command-line and it will be used instead.
+
+HOW TO USE
+==========
+
+Assuming the java executable is on your path, you can run cubedata simply by
+writing:
+
+	java -jar cubedata.jar
+	
+(Note that the filename cubedata.jar may be different such as
+cubedata-1.0.0.jar, in which case you will have to specify that instead). You
+may pass a properties file to use like the following:
+
+	java -jar cubedata.jar salesdata.properties
+
+If none is specified then cubedata will look for data.properties in the current
+folder. Note that there are several other options you can specify that will 
+affect how the text file is generated. Please see the example file for these
+options, which include things like the following:
+
+	- Name of output file
+	- Column delimiter
+	- Load factor
+
+BUILDING
+========
+cubedata comes ready to run as-is but if you are so inclined to make changes
+you may pull down the source code, edit it, and use Maven to build it. 
+
+cubedata is a Maven project designed for easy builds and updates. Simply run a 
+Maven package command from the root project folder, and all files will be 
+generated. The runtime JAR file has no dependencies that you need to worry about.
+
+THANKS
+======
+Thank you for checking out this software. It is simple, but useful, and it might
+come in handy during your development and testing efforts.
+
+Jason Jones
+
